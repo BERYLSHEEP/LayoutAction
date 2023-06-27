@@ -1,0 +1,22 @@
+name: layoutaction
+channels:
+  - pytorch=1.10.0
+  - conda-forge
+dependencies:
+  - python=3.8
+  - cudatoolkit=10.2
+  - torchvision
+  - numpy
+  - scikit-learn
+  - scipy
+  - pip:
+    - tqdm
+    - seaborn
+    - wandb
+    - tabulate
+    - ipdb
+    - python-pptx
+    - pytorch-fid
+    - pywebio
+    - pycocotools
+    - tensorboard

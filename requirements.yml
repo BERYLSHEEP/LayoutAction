@@ -1,10 +1,10 @@
 name: layoutaction
 channels:
-  - pytorch=1.10.0
+  - pytorch
   - conda-forge
 dependencies:
   - python=3.8
-  - cudatoolkit=10.2
+  - cudatoolkit
   - torchvision
   - numpy
   - scikit-learn

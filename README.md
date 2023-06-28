@@ -33,20 +33,28 @@ Install PyTorch 1.8.* and the corresponding versoin of [PyTorch Geometric](https
 
 ## Resources
 
-### Pretrained model 
-
-Different SOTA pre-trained models are saved in[ `Resources/pretrained_model_resources` ](https://drive.google.com/drive/folders/1KU9q83gzKD2HGoBduN2CWC0LHUmDcFy0?usp=drive_link)
+Different SOTA pre-trained models and datasets are saved in[ `Resources` ](https://drive.google.com/drive/folders/1KU9q83gzKD2HGoBduN2CWC0LHUmDcFy0?usp=drive_link)
 
 ```dircolors
     Resources/
     └── pretrained_model_resources
         └── LayoutTransformer
-            ├── rico.pth
-            ├── publaynet.pth
-            ├── infoppt.pth
         └── LayoutGAN++
         └── LayoutVAE
         └── Ours
+            ├── rico.pth
+            ├── publaynet.pth
+            ├── infoppt.pth
+    └── processed_data
+        └── LayoutGAN++
+            └──infoppt
+               └──processed
+                  ├── pre_filter.pt
+            			├── pre_transform.pt
+            			├── test.pt
+            			├── val.pt
+            └──publaynet
+            └──rico 
 ```
 
 ### Data preparation
@@ -55,7 +63,7 @@ Different SOTA pre-trained models are saved in[ `Resources/pretrained_model_reso
 
 ```
 TOPDIR=$(git rev-parse --show-toplevel)
-DATASET=$TOPDIR/LayoutAction/datasets
+DATASET=$TOPDIR/datasets
 mkdir $DATASE
 ```
 
@@ -105,8 +113,6 @@ mkdir $DATASE
       ├── 3.pptx
       └── ...
   ```
-
-
 
 ## Training
 

@@ -1,6 +1,6 @@
 # Layout Generation as Intermediate Action Sequence Prediction - Official Pytorch Impletation
 
-[Paper ]() | [Supplement]()
+[Paper ](https://ojs.aaai.org/index.php/AAAI/article/view/26277) | [Supplement]()
 
 Layout Generation as Intermediate Action Sequence Prediction 
 
@@ -33,6 +33,8 @@ Install PyTorch 1.8.* and the corresponding versoin of [PyTorch Geometric](https
 
 ## Resources
 
+The resources related to Infoppt will be released publicly after the original author open sources them.
+
 Different SOTA pre-trained models and datasets are saved in[ `Resources` ](https://drive.google.com/drive/folders/1KU9q83gzKD2HGoBduN2CWC0LHUmDcFy0?usp=drive_link)
 
 ```dircolors
@@ -63,13 +65,13 @@ Different SOTA pre-trained models and datasets are saved in[ `Resources` ](https
 
 ```
 TOPDIR=$(git rev-parse --show-toplevel)
-DATASET=$TOPDIR/datasets
-mkdir $DATASE
+DATASET=$TOPDIR/LayoutAction/datasets
+mkdir $DATASET
 ```
 
 #### Download and place the datasets
 
-[Rico](https://interactionmining.org/rico)
+[Rico](http://www.interactionmining.org/rico.html)
 
 - Download `rico_dataset_v0.1_semantic_annotations.zip` from "UI Screenshots and Hierarchies with Semantic Annotations" and decompress it.
 
@@ -118,7 +120,7 @@ mkdir $DATASE
 
 ```cmd
 cd LayoutAction
-python main.py --exp test --dataset publaynet --device 1 --log_dir ./output/logs
+python main.py --exp test --dataset publaynet --device 0 --log_dir ./output/logs
 ```
 
 Results are saved in output/logs/publaynet/test. Dataset options: ['rico', 'publaynet', 'infoppt']
@@ -131,14 +133,16 @@ First, obtain the .pkl file of containing the bounding boxes and labels.
 
 ```cmd
 cd LayoutAction
-python main.py --exp test --dataset publaynet --device 1 --evaluate --model_path ./pretrained_model/publaynet.pth --eval_command category_generate --save_pkl
+python main.py --exp test --dataset publaynet --device 0 --evaluate --model_path ../Resources/pretrained_model_resources/Ours/publaynet.pth --eval_command category_generate --save_pkl
 ```
 
 Here, we obtain the category conditional generated file in `LayoutAction/output/logs/publaynet/test/generated_layout.pth`
 
 ### FID Evaluation
 
-This ablation study is only excuated in Rico dataset.
+This ablation study is only excuated in Rico dataset. 
+
+For more detailed comparative experiments, please refer to this document "FID_disc/README.md".
 
 #### Pre-training the FID network
 
@@ -217,4 +221,3 @@ cd const_layout
 python eval.py --dataset publaynet --pkl_paths ../LayoutAction/output/logs/publaynet/test/generated_layout.pth  --compute_real
 ```
 
-## 

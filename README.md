@@ -1,6 +1,6 @@
 # Layout Generation as Intermediate Action Sequence Prediction - Official Pytorch Impletation
 
-[Paper ](https://ojs.aaai.org/index.php/AAAI/article/view/26277) | [Supplement]()
+[Paper ](https://ojs.aaai.org/index.php/AAAI/article/view/26277) | [Supplement](https://github.com/BERYLSHEEP/LayoutActionProject/blob/main/4740-supp.pdf)
 
 Layout Generation as Intermediate Action Sequence Prediction 
 

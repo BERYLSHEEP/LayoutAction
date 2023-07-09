@@ -26,7 +26,7 @@ Start a new conda environment
 
 ```
 conda env create -f requirements.yml
-conda activate layout
+conda activate layoutaction
 ```
 
 ## Resources
@@ -50,9 +50,9 @@ Different SOTA pre-trained models and datasets are saved in[ `Resources` ](https
             └──infoppt
                └──processed
                   ├── pre_filter.pt
-            			├── pre_transform.pt
-            			├── test.pt
-            			├── val.pt
+                  ├── pre_transform.pt
+                  ├── test.pt
+                  ├── val.pt
             └──publaynet
             └──rico 
 ```
@@ -175,7 +175,7 @@ To obtain the fake image dataset which negative cases contain in-batch shuffle a
 
 ```cmd
 python shuffle_gauss_eval.py --dataset rico --split train --command shuffle_gauss --save_img  --out_dir ../PixelInput/output/rico/train_fake
-python shuffle_gauss_eval.py --dataset rico --split val --command shuffle_gauss --save_img  --out_dir ../PixelInput/output/rico/train_val
+python shuffle_gauss_eval.py --dataset rico --split val --command shuffle_gauss --save_img  --out_dir ../PixelInput/output/rico/val_fake
 python shuffle_gauss_eval.py --dataset rico --split test --command shuffle_gauss --save_img  --out_dir ../PixelInput/output/rico/test_fake
 ```
 
@@ -204,7 +204,7 @@ python shuffle_gauss_eval.py --dataset rico --split test --command real --save_i
         --out_dir ../PixelInput/output/rico/test_real
 
 cd FID_disc/PixelInput
-python train_FIDnet.py eval --dataset rico --pkl_path ../../LayoutAction/output/logs/rico/test/generated_layout.pth --save_img_dir ./output/publaynet/ours/test --real_img_dir ./output/rico/test_real --model_path ../pretrained_model/rico_resnet.pth.tar
+python train_FIDnet.py eval --dataset rico --pkl_path ../../LayoutAction/output/logs/rico/test/generated_layout.pth --save_img_dir ./output/rico/ours/test --real_img_dir ./output/rico/test_real --model_path ../pretrained_model/rico_resnet.pth.tar
 ```
 
 - `--pkl_path`: .pkl is the generated file obtained from previous step
@@ -220,11 +220,11 @@ We reuse the heuristic metrics from [LayoutGAN++](https://github.com/ktrk115/con
 
 ```
 mv Resources/processed_data/LayoutGAN++/infoppt const_layout/datas/dataset
-mkdir datas/dataset/infoppt/raw
+mkdir const_layout/datas/dataset/infoppt/raw
 mv Resources/processed_data/LayoutGAN++/publaynet const_layout/datas/dataset
-mkdir datas/dataset/publaynet/raw
+mkdir const_layout/datas/dataset/publaynet/raw
 mv Resources/processed_data/LayoutGAN++/rico const_layout/datas/dataset
-mkdir datas/dataset/rico/raw
+mkdir const_layout/datas/dataset/rico/raw
 ```
 
 - Excuate the following command:

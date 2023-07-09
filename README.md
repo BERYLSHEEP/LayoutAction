@@ -29,8 +29,6 @@ conda env create -f requirements.yml
 conda activate layout
 ```
 
-Install PyTorch 1.8.* and the corresponding versoin of [PyTorch Geometric](https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html)
-
 ## Resources
 
 The resources related to Infoppt will be released publicly after the original author open sources them.
@@ -153,12 +151,22 @@ cd FID_disc
 python divide_rico.py --rico_dir ../LayoutAction/datasets/rico/semantic_annotations/ --out_dir ./data/rico
 ```
 
-To obtain the real image dataset.
+Move the processed dataset to the correct place
 
 ```cmd
 cd FID_disc/LayoutGAN++
+mkdir datas/dataset/rico/raw
+mv Resources/processed_data/LayoutGAN++/rico/processed \
+		FID_disc/LayoutGAN++/datas/dataset/rico
+```
+
+To obtain the real image dataset.
+
+```cmd
 python shuffle_gauss_eval.py --dataset rico --split train --command real --save_img \
         --out_dir ../PixelInput/output/rico/train_real
+python shuffle_gauss_eval.py --dataset rico --split val --command real --save_img \
+        --out_dir ../PixelInput/output/rico/val_real
 python shuffle_gauss_eval.py --dataset rico --split test --command real --save_img \
         --out_dir ../PixelInput/output/rico/test_real
 ```
@@ -166,8 +174,9 @@ python shuffle_gauss_eval.py --dataset rico --split test --command real --save_i
 To obtain the fake image dataset which negative cases contain in-batch shuffle and gauss images.
 
 ```cmd
-python shuffle_gauss_eval.py --dataset rico --split train --command shuffle_gauss --save_img  \ --out_dir ../PixelInput/output/rico/train_fake
-python shuffle_gauss_eval.py --dataset rico --split test --command shuffle_gauss --save_img \ --out_dir ../PixelInput/output/rico/test_fake
+python shuffle_gauss_eval.py --dataset rico --split train --command shuffle_gauss --save_img  --out_dir ../PixelInput/output/rico/train_fake
+python shuffle_gauss_eval.py --dataset rico --split val --command shuffle_gauss --save_img  --out_dir ../PixelInput/output/rico/train_val
+python shuffle_gauss_eval.py --dataset rico --split test --command shuffle_gauss --save_img  --out_dir ../PixelInput/output/rico/test_fake
 ```
 
 To train the FID network
@@ -175,14 +184,15 @@ To train the FID network
 ```cmd
 cd FID_disc/PixelInput
 python train_FIDnet.py train \
-    --real_img_dataset ./output/rico/train_real --false_img_dataset ./output/rico/train_fake
+    --real_img_dir ./output/rico/train_real --false_img_dir ./output/rico/train_fake \
+    --real_val_img_dir ./output/rico/val_real --false_val_img_dir ./output/rico/val_fake
 ```
 
 To calculate the  accuracy
 
 ```cmd
 python train_FIDnet.py cal_accuracy \
-    --real_img_dataset ./output/rico/test_real --false_img_dataset ./output/rico/test_fake \
+    --real_img_dirs ./output/rico/test_real --false_img_dir ./output/rico/test_fake \
     --model_path "pre-trained model path" 
 ```
 
@@ -190,11 +200,11 @@ python train_FIDnet.py cal_accuracy \
 
 ```
 cd FID_disc/LayoutGAN++
-python shuffle_gauss_eval.py --dataset publaynet --split test --command real --save_img \
-        --out_dir ../PixelInput/output/publaynet/test_real
+python shuffle_gauss_eval.py --dataset rico --split test --command real --save_img \
+        --out_dir ../PixelInput/output/rico/test_real
 
 cd FID_disc/PixelInput
-python train_FIDnet.py eval --dataset publaynet --pkl_path ../../LayoutAction/output/logs/publaynet/test/generated_layout.pth --save_img_dir ./output/publaynet/ours/test --real_img_dir ./output/publaynet/test_real --model_path ../pretrained_model/publaynet_resnet.pth.tar
+python train_FIDnet.py eval --dataset rico --pkl_path ../../LayoutAction/output/logs/rico/test/generated_layout.pth --save_img_dir ./output/publaynet/ours/test --real_img_dir ./output/rico/test_real --model_path ../pretrained_model/rico_resnet.pth.tar
 ```
 
 - `--pkl_path`: .pkl is the generated file obtained from previous step
@@ -210,8 +220,11 @@ We reuse the heuristic metrics from [LayoutGAN++](https://github.com/ktrk115/con
 
 ```
 mv Resources/processed_data/LayoutGAN++/infoppt const_layout/datas/dataset
+mkdir datas/dataset/infoppt/raw
 mv Resources/processed_data/LayoutGAN++/publaynet const_layout/datas/dataset
+mkdir datas/dataset/publaynet/raw
 mv Resources/processed_data/LayoutGAN++/rico const_layout/datas/dataset
+mkdir datas/dataset/rico/raw
 ```
 
 - Excuate the following command:
